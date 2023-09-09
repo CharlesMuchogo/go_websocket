@@ -46,6 +46,13 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Printf("message received: %s\n", msg.Greeting)
 
+		// Echo the received message back to the client
+		err = wsConn.WriteJSON(msg)
+		if err != nil {
+			fmt.Printf("error writing json: %s \n", err.Error())
+			break
+		}
+
 	}
 }
 
