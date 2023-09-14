@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
 
 type message struct {
-	Greeting string `json:"greeting"`
+    Message string `json:"message"`
+    Time    int64  `json:"time"`
 }
 
 var (
@@ -35,16 +37,19 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 	defer wsConn.Close()
 
 	for {
-		var msg message
 
+		currentTime := time.Now()
+        epoch := currentTime.Unix()
+		var msg message
 		err := wsConn.ReadJSON(&msg)
+		msg.Time = epoch
+
 
 		if err != nil {
-			fmt.Printf("error reading json: %s \n", err.Error())
-			break
+			fmt.Printf("error reading json: %s \n", err.Error())			
 		}
 
-		fmt.Printf("message received: %s\n", msg.Greeting)
+		fmt.Printf("message received: %s\n", msg.Message, )
 
 		// Echo the received message back to the client
 		err = wsConn.WriteJSON(msg)
