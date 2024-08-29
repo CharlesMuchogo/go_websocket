@@ -1,8 +1,8 @@
-module websocket
+module main.go
 
-go 1.19
+go 1.23.0
 
 require (
-	github.com/gorilla/mux v1.8.0 // indirect
-	github.com/gorilla/websocket v1.5.0 // indirect
+	github.com/gorilla/mux v1.8.1
+	github.com/gorilla/websocket v1.5.3
 )
